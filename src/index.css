@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import "tailwindcss";
+body{
+  box-sizing: border-box;
+  font-family: Poppins;
+  @apply text-gray-900 overflow-x-hidden bg-gray-50
+}
+html{
+  scroll-behavior: smooth;
+}
+
+@layer components{
+  .btn{
+    @apply py-2 px-3 bg-gradient-to-tl from-pink-500 to-purple-600 text-white rounded hover:bg-gradient-to-tr hover:from-pink-500 hover:to-purple-600 cursor-pointer;
+  }
+  .linearColor{
+    background: linear-gradient(90deg,
+            #44ff9a -0.55%,
+            #44b0ff 22.86%,
+            #8b44ff 48.36%,
+            #ff6644 73.33%,
+            #ebff70 99.34%);
+  }
+
+  .multi-shadow {
+  box-shadow:
+    0 0 3px #ff44cc,   
+    0 0 6px #44b0ff, 
+    0 0 9px #8b44ff,   
+    0 0 12px #ff8844;
+}
+}
