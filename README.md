@@ -1,6 +1,6 @@
-QuickMeet
+QikMeet
 
-QuickMeet is a lightweight video-calling web application designed for instant, frictionless meetings. Users simply enter a name, generate a room, and join a video call immediately—no accounts, sign-ups, or onboarding required. The generated room link can be shared with anyone, allowing participants to join with a single click.
+QikMeet is a lightweight video-calling web application designed for instant, frictionless meetings. Users simply enter a name, generate a room, and join a video call immediately—no accounts, sign-ups, or onboarding required. The generated room link can be shared with anyone, allowing participants to join with a single click.
 
 Why I Built It
 
