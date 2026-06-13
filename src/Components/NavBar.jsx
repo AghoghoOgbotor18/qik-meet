@@ -73,7 +73,7 @@ const NavBar = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Link to="/signup">
+            <Link to="#">
               <button className="btn">Get Started</button>
             </Link>
           </div>

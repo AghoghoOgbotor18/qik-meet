@@ -42,7 +42,7 @@ const Room = () => {
   }, [roomID]);
 
   return (
-    <div className="">
+    <div className="relative">
         <NavBar />
         <div className="">
             <div

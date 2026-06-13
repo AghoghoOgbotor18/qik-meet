@@ -6,16 +6,21 @@ import heroImage from "../assets/heroImage.png";
 const Hero = () => {
   const inputRef = useRef(null);
   const [input, setInput] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!input.trim()) {
       inputRef.current.focus();
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
       return;
     }
     // Generate unique ID part
-    const uniqueId = Math.random().toString(36).substring(2, 8);
+    const uniqueId = crypto.randomUUID().substring(2, 8);
     // Combine user input + unique id
     const roomId = `${input}-${uniqueId}`;
 
@@ -51,7 +56,7 @@ const Hero = () => {
         >
           Start a free video call with your friends, family or team members.
           <br />
-          No Sign up required.
+          No Sign up - No Login required.
         </motion.p>
 
         <motion.form
@@ -79,6 +84,9 @@ const Hero = () => {
             Join Room
           </motion.button>
         </motion.form>
+        {
+          error && <p className="text-red-500 text-sm -mt-5">please input room name</p>
+        }
       </motion.div>
 
       {/* RIGHT SIDE - IMAGE */}
