@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import {lazy, Suspense} from "react"
 import Home from './Pages/Home'
+import NotFound from './Pages/NotFound'
 const Room = lazy(() => import("./Pages/Room"))
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/room/:roomID" element={<Room />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
