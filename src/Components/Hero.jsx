@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import heroImage from "../assets/heroImage.png";
+import heroImage from "../assets/heroImage.webp";
 
 const Hero = () => {
   const inputRef = useRef(null);

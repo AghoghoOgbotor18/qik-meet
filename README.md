@@ -30,11 +30,29 @@ At the time of building this project, I had not yet learned authentication syste
 
 ---
 
-## Challenge & Solution
+## Challenges & Solutions
 
-**Problem:** A potential issue was room-name collisions. If multiple users entered the same room name, they could unintentionally join the same meeting.
+**Challenge 1 — Room Name Collisions**
+
+**Problem:** If multiple users entered the same room name, they could unintentionally join the same meeting.
 
 **Solution:** I implemented a unique room-generation strategy that appends a random string to each room name using `crypto.randomUUID()`. For example, a room named `video` might become `video-md48pj`. This significantly reduces the likelihood of collisions while keeping room URLs readable and easy to share.
+
+---
+
+**Challenge 2 — Large Bundle Size**
+
+**Problem:** The initial production build produced a single JavaScript bundle of **5,586 kB**, almost entirely due to the ZEGOCLOUD library. This caused slow initial page loads even for users who hadn't yet joined a room.
+
+**Solution:** I implemented code splitting using Vite's `manualChunks` and React's `lazy()` with `Suspense`. This separated the bundle into distinct chunks and deferred loading the ZEGOCLOUD library until the user actually navigates to the meeting room.
+
+| Chunk | Before | After |
+|---|---|---|
+| Main JS bundle | 5,586 kB | 350 kB |
+| ZEGOCLOUD | merged in | 5,175 kB (loads on demand) |
+| React vendor | merged in | 11 kB |
+
+The homepage now loads **94% faster** in terms of initial JS payload.
 
 ---
 
@@ -94,6 +112,8 @@ Then open [http://localhost:5173](http://localhost:5173) in your browser.
 - Working with third-party APIs
 - Generating and managing dynamic routes
 - Handling unique room identification to prevent collisions
+- Code splitting and lazy loading with React and Vite
+- Analysing and optimising production bundle size
 - Building a real-world product under technical constraints
 - Designing for simplicity and user experience
 

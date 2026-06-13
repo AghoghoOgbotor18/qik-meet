@@ -1,15 +1,19 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {lazy, Suspense} from "react"
 import Home from './Pages/Home'
-import Room from './Pages/Room'
+const Room = lazy(() => import("./Pages/Room"))
 
 function App() {
-
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/room/:roomID" element={<Room />} />
-      </Routes>
+      <Suspense fallback={
+        <div className='border border-black w-8 h-8 rounded-full border-t-transparent' />
+      }>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/room/:roomID" element={<Room />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   )
 }

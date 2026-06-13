@@ -1,5 +1,5 @@
 import React from "react";
-import AboutImage from "../assets/family.png";
+import AboutImage from "../assets/family.webp";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 

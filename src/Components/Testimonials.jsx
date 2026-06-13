@@ -1,10 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import passOne from "../assets/pass1.jpg"
-import passTwo from "../assets/pass2.jpg"
-import passThree from "../assets/pass3.jpg"
-import passFour from "../assets/pass4.jpg"
-import passFive from "../assets/pass5.jpg"
+import passOne from "../assets/pass1.webp"
+import passTwo from "../assets/pass2.webp"
 
 const testimonials = [
   {
@@ -23,19 +20,19 @@ const testimonials = [
     text: "QikMeet transformed how we hold quick check-ins at work. No sign-up, just one room link — absolutely love it!",
     name: "Sarah Morgan",
     role: "Content Strategist",
-    image: passThree
+    image: passOne
   },
   {
     text: "Our church uses QikMeet for virtual meetings. The audio and video quality is amazing even with low data.",
     name: "David Ojo",
     role: "Community Leader",
-    image: passFour,
+    image: passTwo,
   },
   {
     text: "Quick, light, and reliable — QikMeet saves me from the usual tech setup stress. I love how simple it is!",
     name: "Amara Eze",
     role: "Project Manager",
-    image: passFive,
+    image: passOne,
   },
 ];
 
