@@ -7,24 +7,34 @@ const Hero = () => {
   const inputRef = useRef(null);
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!input.trim()) {
       inputRef.current.focus();
       setError(true);
+      setLoading(false);
       setTimeout(() => {
         setError(false);
       }, 3000);
       return;
     }
-    // Generate unique ID part
-    const uniqueId = crypto.randomUUID().substring(2, 8);
-    // Combine user input + unique id
-    const roomId = `${input}-${uniqueId}`;
-
-    navigate(`/room/${roomId}`);
+    try{
+      // Generate unique ID part
+      const uniqueId = crypto.randomUUID().substring(2, 8);
+      // Combine user input + unique id
+      const roomId = `${input}-${uniqueId}`;
+      navigate(`/room/${roomId}`);
+    } catch(err){
+      console.error(err);
+      setIsError("Zegocloud Error", error);
+    } finally{
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,7 +42,7 @@ const Hero = () => {
       id="home"
       className="container mx-auto py-30 flex flex-col-reverse md:flex-row justify-center items-center gap-8 p-4 md:gap-16"
     >
-      {/* LEFT SIDE - TEXT */}
+      {/* LEFT SIDE */}
       <motion.div
         className="flex flex-col gap-5 justify-center md:items-start items-center text-center md:text-start"
         initial={{ opacity: 0, x: -80 }}
@@ -79,13 +89,19 @@ const Hero = () => {
             whileTap={{ scale: 0.95 }}
             type="submit"
             onClick={handleSubmit}
-            className="btn absolute right-1 top-1"
+            className="btn absolute right-1 top-1 disabled:cursor-not-allowed"
+            disabled = {loading}
           >
-            Join Room
+            {
+              loading ? <div className="w-5 h-5 rounded-full border border-white border-t-transparent animate-spin" /> : "Join room"
+            }
           </motion.button>
         </motion.form>
         {
           error && <p className="text-red-500 text-sm -mt-5">please input room name</p>
+        }
+        {
+          isError && <p>unable to join room. please try again</p>
         }
       </motion.div>
 

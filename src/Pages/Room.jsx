@@ -7,49 +7,67 @@ import RoomLink from "../Components/RoomLink";
 const Room = () => {
   const { roomID } = useParams();
   const meetingContainer = useRef(null);
+  const zpRef = useRef(null); //store zp instance in a ref
 
   useEffect(() => {
     const appID = Number(import.meta.env.VITE_ZEGO_APP_ID);
     const serverSecret = import.meta.env.VITE_ZEGO_SERVER_SECRET;
 
-    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-      appID,
-      serverSecret,
-      roomID,
-      Date.now().toString(),
-      "Guest User"
-    );
+    if (!appID || !serverSecret) {
+      console.error("Missing ZEGOCLOUD credentials in .env");
+      return;
+    }
 
-    const zp = ZegoUIKitPrebuilt.create(kitToken);
-    zp.joinRoom({
-      container: meetingContainer.current,
-      sharedLinks: [
-        {
-          name: "Copy Link",
-          url: `${window.location.origin}/room/${roomID}`,
+    if (!meetingContainer.current) return;
+
+    try {
+      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+        appID,
+        serverSecret,
+        roomID,
+        Date.now().toString(),
+        "Guest User"
+      );
+
+      const zp = ZegoUIKitPrebuilt.create(kitToken);
+      zpRef.current = zp; //save to ref so cleanup can access it
+
+      zp.joinRoom({
+        container: meetingContainer.current,
+        sharedLinks: [
+          {
+            name: "Copy Link",
+            url: `${window.location.origin}/room/${roomID}`,
+          },
+        ],
+        scenario: {
+          mode: ZegoUIKitPrebuilt.VideoConference,
         },
-      ],
-      scenario: {
-        mode: ZegoUIKitPrebuilt.VideoConference,
-      },
-      showPreJoinView: false,
-    });
+        showPreJoinView: false, //shows camera preview before joining
+      });
+    } catch (err) {
+      console.error("ZEGOCLOUD error:", err);
+    }
 
-    //Clean up when user leaves or navigates away
+    //zp cleanup
     return () => {
-      zp.destroy(); // stops camera, mic, and room connection
+      if (zpRef.current) {
+        zpRef.current.destroy();
+        zpRef.current = null;
+      }
     };
   }, [roomID]);
 
   return (
-    <div className="relative">
-        <NavBar />
-        <div className="">
-            <div
-            ref={meetingContainer}
-            className="w-screen h-screen mx-auto bg-black text-red"></div>
-            <RoomLink roomID={roomID}/>
-        </div>
+    <div className="flex flex-col w-screen h-screen">
+      <NavBar />
+      <div className="relative flex-1">
+        <div
+          ref={meetingContainer}
+          className="w-full h-[85vh] bg-black"
+        />
+        <RoomLink roomID={roomID} />
+      </div>
     </div>
   );
 };

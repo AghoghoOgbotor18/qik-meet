@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <Suspense fallback={
-        <div className='border border-black w-8 h-8 rounded-full border-t-transparent' />
+        <div className='flex justify-center items-center py-50 border-2 border-black w-10 h-10 rounded-full border-t-transparent animate-spin' />
       }>
         <Routes>
           <Route path="/" element={<Home/>} />
