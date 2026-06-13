@@ -71,6 +71,7 @@ const Hero = () => {
 
         <motion.form
           className="relative"
+          onSubmit={handleSubmit}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
@@ -88,7 +89,6 @@ const Hero = () => {
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            onClick={handleSubmit}
             className="btn absolute right-1 top-1 disabled:cursor-not-allowed"
             disabled = {loading}
           >
