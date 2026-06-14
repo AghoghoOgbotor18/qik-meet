@@ -73,7 +73,7 @@ const Footer = () => {
                     </div>
                 </motion.div>
 
-                <p className="text-center text-sm pt-10">&copy; 2025 Sylvia Charles. All Rights Reserved</p>
+                <p className="text-center text-sm pt-10">&copy; 2025 Aghogho Ogbotor. All Rights Reserved</p>
             </motion.div>
         </section>
     )

@@ -12,19 +12,19 @@ At the time of building this project, I had not yet learned authentication syste
 
 ## Features
 
-- Instant room creation
-- Shareable room links
+- Instant room creation — no account needed
+- Shareable room link for easy invites
 - Multi-participant video calls
 - Real-time text chat
-- No account or sign-up required
-- Responsive and user-friendly interface
+- Unique room ID generation to prevent collisions
+- Fully responsive interface
 
 ---
 
 ## How It Works
 
 1. The user enters a room name on the landing page.
-2. The application generates a unique room URL.
+2. The application sanitizes the input and appends a unique ID — so `meeting` becomes `meeting_4f9a2c`.
 3. The room is powered by the **ZEGOCLOUD API**, which handles video conferencing, chat functionality, and participant management.
 4. Anyone with the room link can join instantly without creating an account.
 
@@ -34,9 +34,9 @@ At the time of building this project, I had not yet learned authentication syste
 
 **Challenge 1 — Room Name Collisions**
 
-**Problem:** If multiple users entered the same room name, they could unintentionally join the same meeting.
+**Problem:** If two separate groups both named their room `meeting`, they'd end up in the same video call without realising it.
 
-**Solution:** I implemented a unique room-generation strategy that appends a random string to each room name using `crypto.randomUUID()`. For example, a room named `video` might become `video-md48pj`. This significantly reduces the likelihood of collisions while keeping room URLs readable and easy to share.
+**Solution:** I appended a random string to every room name at generation time using `crypto.randomUUID()` — so `meeting` becomes `meeting_4f9a2c`. The URL stays readable, but the chance of collision drops to near zero. User input is also sanitized to replace spaces and special characters with underscores, preventing illegal characters from breaking the room ID.
 
 ---
 
@@ -53,6 +53,14 @@ At the time of building this project, I had not yet learned authentication syste
 | React vendor | merged in | 11 kB |
 
 The homepage now loads **94% faster** in terms of initial JS payload.
+
+---
+
+**Challenge 3 — Camera and Microphone Not Releasing on Exit**
+
+**Problem:** When a user navigated away from the room page — especially on mobile — the camera and microphone remained active even after leaving. The browser indicator light stayed on and permissions were not properly revoked.
+
+**Solution:** I tracked the raw media stream using a `useRef` and called `track.stop()` on every track during cleanup. A `stopAllTracks()` function runs in three situations: when the user clicks the exit button, when `onLeaveRoom` fires, and in the `useEffect` cleanup when the component unmounts. I also added a 10-second connection timeout that detects failed connections and shows an exit overlay — so users are never stuck on a blank screen with their camera running and no way out.
 
 ---
 
@@ -91,8 +99,8 @@ npm install
 Create a `.env` file in the root of the project and add your ZEGOCLOUD credentials:
 
 ```env
-VITE_APP_ID=your_app_id_here
-VITE_SERVER_SECRET=your_server_secret_here
+VITE_ZEGO_APP_ID=your_app_id_here
+VITE_ZEGO_SERVER_SECRET=your_server_secret_here
 ```
 
 > ⚠️ Never commit your `.env` file to GitHub. Make sure it is listed in your `.gitignore`.
@@ -114,6 +122,8 @@ Then open [http://localhost:5173](http://localhost:5173) in your browser.
 - Handling unique room identification to prevent collisions
 - Code splitting and lazy loading with React and Vite
 - Analysing and optimising production bundle size
+- Managing browser media permissions and releasing camera/mic correctly
+- Building resilient UX around unreliable network connections
 - Building a real-world product under technical constraints
 - Designing for simplicity and user experience
 
@@ -121,7 +131,7 @@ Then open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## Live Demo
 
-[View Live App](https://qik-meet.vercel.app)
+[View Live App](https://qik-meet.vercel.app/)
 
 ---
 
