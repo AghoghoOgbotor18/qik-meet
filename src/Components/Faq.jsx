@@ -6,7 +6,7 @@ const faqs = [
   {
     question: "What is QikMeet?",
     answer:
-      "QikMeet is a simple and fast video meeting platform that lets you connect instantly with friends, family, or colleagues — no downloads or sign-ups required.",
+      "QikMeet is a simple and fast video meeting platform that lets you connect instantly with friends, family, or colleagues — no downloads or sign-ups required. Just enter room name, copy the room url and send to anyone to join",
   },
   {
     question: "Do I need to create an account to start a meeting?",

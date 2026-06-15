@@ -59,7 +59,7 @@ const Hero = () => {
         </motion.h2>
 
         <motion.p
-          className="max-w-[95%] md:w-full text-gray-600"
+          className="max-w-[95%] md:w-[80%] text-gray-600 flex flex-col gap-1"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
@@ -67,6 +67,8 @@ const Hero = () => {
           Start a free video call with your friends, family or team members.
           <br />
           No Sign up - No Login required.
+          <br />
+          <span>Enter room name - Click "Join room" - Copy room url and send the url to anyone to join you.</span>
         </motion.p>
 
         <motion.form

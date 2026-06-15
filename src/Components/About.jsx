@@ -48,7 +48,7 @@ const About = () => {
           <p className="text-gray-900 leading-relaxed">
             Whether it's a family gathering, a study group, or a quick team
             meeting, QikMeet makes it effortless to create and join rooms in
-            seconds.
+            seconds. Enter room name - click "Join room" - copy room url and you can send the url to anyone to join you for a quick conversation.
           </p>
           <p>
             <span className="font-bold text-lg">QikMeet</span> — One Click, and
